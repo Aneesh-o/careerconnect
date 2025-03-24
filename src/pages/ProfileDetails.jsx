@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Header from '../Components/Header';
-import { Container, Row, Col, Card, ListGroup, Nav } from 'react-bootstrap';
+import { Container, Row, Col, Card, ListGroup, Nav, Button } from 'react-bootstrap';
 import { Envelope, Telephone, GenderFemale, CalendarDate, GeoAlt, Building, Award, Calendar, Briefcase } from 'react-bootstrap-icons';
 import { getParticularUserDetails } from '../services/allApi';
 import { useParams } from 'react-router-dom';
 import { IsEmployeeStatusContext } from '../Contexts/ContextApi';
 import serverUrl from '../services/serverUrl';
+import { FaDownload } from "react-icons/fa";
 
 const ProfileDetails = () => {
     const { id } = useParams();
@@ -56,6 +57,15 @@ const ProfileDetails = () => {
                             <div className="d-flex align-items-center mb-1">
                                 <img style={{ width: '50px', borderRadius: '50%' }} src={`${serverUrl}/uploads/${jobSeekerProfileDetails?.profilePic}`} alt="" />
                                 <h5 className="mb-0 mx-2">{jobSeekerProfileDetails.username || "N/A"}</h5>
+                            </div>
+                            <div className="ms-auto d-flex">
+                                <Button variant="light" className="me-2 rounded-circle">
+                                    <a target='blank' href={`${serverUrl}/uploads/${jobSeekerProfileDetails.resume}`}
+                                        download
+                                        style={{ textDecoration: "none", color: "inherit" }}>
+                                        Download Resume <FaDownload />
+                                    </a>
+                                </Button>
                             </div>
                         </div>
                         <Row className="g-0">

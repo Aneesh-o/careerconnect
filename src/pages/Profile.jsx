@@ -7,10 +7,11 @@ import Footer from '../Components/Footer';
 import AddJob from '../Components/AddJob';
 import JobSeekerDetails from '../Components/JobSeekerDetails';
 import { employerDetailsContext, IsEmployeeStatusContext, profileDetailsContext } from '../Contexts/ContextApi';
-import { employerAcDetails, getUserJobDetails, seekerProfileDetails } from '../services/allApi';
+import { employerAcDetails, getUserJobDetails, seekerProfileDetails, updateSeekerResume } from '../services/allApi';
 import serverUrl from '../services/serverUrl';
 import { IoChatbubbleEllipses } from "react-icons/io5";
 import { Link } from 'react-router-dom';
+import { MdOutlineFileUpload } from "react-icons/md"; // Correct import
 
 
 const Profile = () => {
@@ -19,6 +20,26 @@ const Profile = () => {
     const { isEmployee, setIsEmployee } = useContext(IsEmployeeStatusContext)
     const [jobSeekerProfileDetails, setJobSeekerProfileDetails] = useState({})
     const [employerProfileDetails, setEmployerProfileDetails] = useState({})
+
+    const [resume, setResume] = useState(null);
+
+
+    useEffect(() => {
+        if (!resume) return; // ✅ Prevents running on initial render
+
+        const allowedTypes = ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
+
+        if (allowedTypes.includes(resume.type)) {
+            updateResume(); // ✅ Upload only when valid
+        } else {
+            setResume(null);
+            alert("Invalid file type. Please upload a PDF or DOCX.");
+        }
+    }, [resume]);
+
+
+
+
 
     useEffect(() => {
         getUsersDetails()
@@ -81,6 +102,34 @@ const Profile = () => {
             alert("Authentication missing... Please login");
         }
     };
+
+    const updateResume = async () => {
+        const token = sessionStorage.getItem("token")
+        if (token) {
+            const reqHeaders = {
+                "Authorization": `Bearer ${token}`,
+            }
+            const reqBody = new FormData()
+            reqBody.append("resume", resume)
+            console.log(reqBody);
+
+            try {
+                const result = await updateSeekerResume(reqBody, reqHeaders)
+                console.log(result);
+
+                if (result.status == 200) {
+                    alert("Resume Updated successfully");
+                } else if (result.status == 404) {
+                    alert(result.response.error)
+                }
+            } catch (err) {
+                alert(err)
+            }
+        } else {
+            alert("Authentication failed please login...")
+        }
+    }
+
 
 
     return (
@@ -180,6 +229,12 @@ const Profile = () => {
                                             <Link to={jobSeekerProfileDetails?._id ? `/chat/${jobSeekerProfileDetails._id}` : '#'}>
                                                 <IoChatbubbleEllipses />
                                             </Link>
+                                        </Button>
+                                        <Button variant="light" className="me-2 rounded-circle">
+                                            <label htmlFor="file-upload" className="d-flex align-items-center justify-content-center" style={{ cursor: "pointer" }}>
+                                                <MdOutlineFileUpload size={24} />
+                                                <input name='resume' onChange={e => setResume(e.target.files[0])} type="file" id="file-upload" style={{ display: "none" }} />
+                                            </label>
                                         </Button>
                                     </div>
                                 </div>

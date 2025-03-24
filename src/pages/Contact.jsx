@@ -36,10 +36,7 @@ const Contact = () => {
         try {
             const result = await userAppliedDetails(reqHeaders); // API call
             if (result.status === 200) {
-                console.log("Fetched Data:", result.data);
-
                 let hasNonRejectedApplicants = false; // Flag to check for valid applicants
-
                 const updatedJobs = result.data.jobs.map(job => {
                     const totalApplicantsCount = job.applicants.length; // ✅ Total applicants count
 
@@ -139,7 +136,6 @@ const Contact = () => {
             try {
                 const result = await getUserAppliedJobs(reqHeader)
                 if (result.status == 200) {
-                    console.log(result);
                     setUserAppliedJobs(result.data)
                 } else if (result.status == 500) {
                     alert(result.response.data)
@@ -270,31 +266,3 @@ const Contact = () => {
 };
 
 export default Contact;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { Table, Button } from "react-bootstrap";
-
-// const AppliedJobsList = ({ userAppliedJobs, handleReject, handleSelect, select }) => {
-//     return (
-//         <div className="text-center w-75">
-//             <h4 className="mb-4 text-warning">Applied Job Status</h4>
-
-//         </div>
-//     );
-// };
-
-// export default AppliedJobsList;

@@ -119,6 +119,11 @@ export const getAllEmployers = async () => {
 };
 
 
-export const getMessage = async (senderId, receiverId) => {
-    return await commonApi("GET", `${serverUrl}/getmessages/${senderId}/${receiverId}`);
+export const getMessage = async (reqBody) => {
+    return await commonApi("POST", `${serverUrl}/getmessages`, reqBody);
+};
+
+// Update resume
+export const updateSeekerResume = async (reqBody, reqHeaders) => {
+    return await commonApi("PUT", `${serverUrl}/jobseeker-resume`, reqBody, reqHeaders);
 };
