@@ -5,6 +5,7 @@ import { deleteUserJobs, getUserJobDetails, userApplyingJob } from '../services/
 import { Dropdown } from "react-bootstrap";
 import AddJob from './AddJob';
 import { jobCardEditContext } from '../Contexts/ContextApi';
+import { toast } from 'react-toastify';
 
 const JobCard = ({ insideProfile, item ,updatingButton}) => {
     const { jobCardUpdateDetails, setJobCardUpdateDetails } = useContext(jobCardEditContext)
@@ -49,7 +50,7 @@ const JobCard = ({ insideProfile, item ,updatingButton}) => {
                     if (result.status == 200) {
                         alert("Applied success fully...you will get answer from company")
                     } else if (result.status == 400) {
-                        alert("Already applyed for this job...")
+                        toast.warning("Already applyed for this job...")
                     }
                 } catch (err) {
                     console.log(err);
@@ -97,7 +98,6 @@ const JobCard = ({ insideProfile, item ,updatingButton}) => {
                                     </div>
                                     <h5 className="card-title mb-2">{item.designation}</h5>
                                     <div className="d-flex align-items-center mb-3">
-                                        {/* <img style={{ width: '30px' }} src="" alt="" /> */}
                                         <span className="ms-2">{item.companyName}</span>
                                     </div>
                                     <div className="d-flex align-items-center mb-2">
@@ -151,7 +151,6 @@ const JobCard = ({ insideProfile, item ,updatingButton}) => {
                                                 </div>
                                                 <h5 className="card-title mb-2">{item.designation}</h5>
                                                 <div className="d-flex align-items-center mb-3">
-                                                    {/* <img style={{ width: '30px' }} src="" alt="" /> */}
                                                     <span className="ms-2">{item.companyName}</span>
                                                 </div>
                                                 <div className="d-flex align-items-center mb-2">

@@ -36,27 +36,27 @@ const Contact = () => {
         try {
             const result = await userAppliedDetails(reqHeaders); // API call
             if (result.status === 200) {
-                let hasNonRejectedApplicants = false; // Flag to check for valid applicants
+                let hasNonRejectedApplicants = false; 
                 const updatedJobs = result.data.jobs.map(job => {
-                    const totalApplicantsCount = job.applicants.length; // ✅ Total applicants count
+                    const totalApplicantsCount = job.applicants.length; 
 
                     // Filter out rejected applicants
                     const filteredApplicants = job.applicants.filter(applicant => {
                         if (applicant.status !== "Rejected") {
-                            hasNonRejectedApplicants = true; // Found at least one valid applicant
-                            return true; // Keep non-rejected applicants
+                            hasNonRejectedApplicants = true; 
+                            return true; 
                         }
                         return false; // Remove rejected applicants
                     });
 
                     return {
                         ...job,
-                        applicants: filteredApplicants, // ✅ Only non-rejected applicants remain
-                        totalApplicants: totalApplicantsCount, // ✅ Total applicants (before filtering)
+                        applicants: filteredApplicants, 
+                        totalApplicants: totalApplicantsCount, 
                     };
                 });
 
-                setUserDetails({ jobs: updatedJobs }); // ✅ Update job details
+                setUserDetails({ jobs: updatedJobs }); 
 
             } else {
                 console.error("Unexpected response:", result);

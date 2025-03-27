@@ -9,7 +9,7 @@ import serverUrl from '../services/serverUrl';
 
 const FindCandidates = () => {
   const [usersDetails, setUsersDetails] = useState([])
-  const [searchQuery, setSearchQuery] = useState(""); // State for search query
+  const [searchQuery, setSearchQuery] = useState(""); 
   const { isEmployee, setIsEmployee } = useContext(IsEmployeeStatusContext)
   const [preview, setPreview] = useState("")
 
@@ -69,7 +69,7 @@ const FindCandidates = () => {
                 <Card.Body>
                   <Row>
                     <Col xs={3} className="text-center d-flex justify-content-center align-items-center">
-                      <Link to={`/profiledetails/${details._id}`}> {/* Set the correct target URL */}
+                      <Link to={`/profiledetails/${details._id}`}> 
                         <Card.Img
                           src={preview ? preview : `${serverUrl}/uploads/${details?.profilePic}`}
                           roundedCircle
@@ -78,7 +78,7 @@ const FindCandidates = () => {
                       </Link>
                     </Col>
                     <Col xs={6}>
-                      <div key={details.id} className="mb-3"> {/* Parent wrapper element */}
+                      <div key={details.id} className="mb-3"> 
                         <Card.Title className="mb-1">Name : {details.username}</Card.Title>
                         <div className="mb-2">
                           <div className="text-muted small">

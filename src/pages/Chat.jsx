@@ -47,7 +47,6 @@ const Chat = () => {
         fetchAllUsersAndEmployers();
     }, []);
 
-    // ✅ Define getMessages function BEFORE using it inside useEffect
     const getMessages = async () => {
         try {
             if (!selectedUser || !selectedUser._id) return;
@@ -58,7 +57,6 @@ const Chat = () => {
         }
     };
 
-    // 🔹 useEffect to fetch messages when a user is selected
     useEffect(() => {
         if (selectedUser) {
             getMessages();
@@ -106,8 +104,6 @@ const Chat = () => {
             console.error("Error sending message:", error);
         }
     };
-
-    console.log(userDetails);
 
 
     return (

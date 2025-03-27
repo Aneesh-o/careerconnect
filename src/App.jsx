@@ -8,6 +8,8 @@ import Contact from './pages/Contact'
 import FindCandidates from './pages/FindCandidates'
 import ProfileDetails from './pages/ProfileDetails'
 import Chat from './pages/Chat'
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
         <Route path='/profiledetails/:id' element={<ProfileDetails />} />
         <Route path='/chat/:id' element={<Chat />} />
       </Routes>
+      <ToastContainer position="top-center" className="" autoClose={3000} />
     </>
   )
 }

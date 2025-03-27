@@ -11,7 +11,7 @@ import { employerAcDetails, getUserJobDetails, seekerProfileDetails, updateSeeke
 import serverUrl from '../services/serverUrl';
 import { IoChatbubbleEllipses } from "react-icons/io5";
 import { Link } from 'react-router-dom';
-import { MdOutlineFileUpload } from "react-icons/md"; // Correct import
+import { MdOutlineFileUpload } from "react-icons/md"; 
 
 
 const Profile = () => {
@@ -26,9 +26,7 @@ const Profile = () => {
 
     useEffect(() => {
         if (!resume) return;
-
         const allowedTypes = ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
-
         if (allowedTypes.includes(resume.type)) {
             updateResume();
         } else {
@@ -122,8 +120,6 @@ const Profile = () => {
             alert("Authentication failed please login...")
         }
     }
-console.log(employerProfileDetails);
-
 
     return (
         <>

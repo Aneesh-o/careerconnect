@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 const Header = ({ isEmployee }) => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  
   const signOut = async (e) => {
     e.preventDefault();
     sessionStorage.clear();

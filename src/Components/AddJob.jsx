@@ -145,7 +145,6 @@ const AddJob = ({ userJobDetail }) => {
                       <input
                         value={editJobDetails[key]}
                         onChange={(e) =>
-                          // setEditJobDetails((prev) => ({ ...prev, [key]: e.target.value }))
                           setEditJobDetails((prev) => ({ ...prev, [key]: e.target.value }))
                         }
                         type="text"
