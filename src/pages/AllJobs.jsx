@@ -9,9 +9,10 @@ import { IsEmployeeStatusContext } from "../Contexts/ContextApi";
 const AllJobs = () => {
 
     const [fullJobDetails, setFullJobDetails] = useState([]);
-    const [searchQueryJobLocation, setSearchQueryJobLocation] = useState(""); // Job Location Search
-    const [searchQueryDesignation, setSearchQueryDesignation] = useState(""); // Designation Search
+    const [searchQueryJobLocation, setSearchQueryJobLocation] = useState("");
+    const [searchQueryDesignation, setSearchQueryDesignation] = useState("");
     const { isEmployee, setIsEmployee } = useContext(IsEmployeeStatusContext)
+    const [updatingButton, setUpdatingButton] = useState(false)
 
 
     useEffect(() => {
@@ -24,6 +25,8 @@ const AllJobs = () => {
             setIsEmployee(userData.role === "Employer");
         }
     }, []);
+
+
 
     const getFullJobs = async () => {
         const token = sessionStorage.getItem("token");
@@ -41,14 +44,17 @@ const AllJobs = () => {
         }
     };
 
-    // **Filtering Jobs based on both Job Location and Designation**
     const filteredJobs = fullJobDetails.filter((job) => {
         return (
             job.jobLocation?.toLowerCase().includes(searchQueryJobLocation.toLowerCase()) &&
             job.designation?.toLowerCase().includes(searchQueryDesignation.toLowerCase())
         );
     });
-    console.log(searchQueryJobLocation);
+
+
+
+
+
 
     return (
         <>
@@ -121,7 +127,7 @@ const AllJobs = () => {
                     <Col className="container" lg={9}>
                         <Row sm={12} md={4} lg={4}>
                             {filteredJobs.length > 0 ? (
-                                filteredJobs.map((job) => <JobCard key={job._id || job.id} item={job} />)
+                                filteredJobs.map((job) => <JobCard key={job._id || job.id} updatingButton={updatingButton} item={job} />)
                             ) : (
                                 <div className="text-danger fw-bolder text-center mt-3">
                                     No jobs found for your search criteria.

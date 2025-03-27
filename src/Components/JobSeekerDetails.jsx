@@ -3,6 +3,8 @@ import { Button, Modal } from 'react-bootstrap';
 import { PencilSquare } from 'react-bootstrap-icons';
 import { employerUpdateProfileApi, seekerProfileUpdation } from '../services/allApi';
 import { employerDetailsContext, profileDetailsContext } from '../Contexts/ContextApi';
+import serverUrl from '../services/serverUrl';
+
 
 const JobSeekerDetails = ({ isEmployee, employerProfileDetails, jobSeekerProfileDetails }) => {
     const { employerDetails, setEmployerDetails } = useContext(employerDetailsContext)
@@ -21,6 +23,8 @@ const JobSeekerDetails = ({ isEmployee, employerProfileDetails, jobSeekerProfile
             profilePic: employerProfileDetails?.profilePic || ""
         });
 
+        console.log(employerProfileDetails);
+        
         setJobSeekerAcDetails({
             email: jobSeekerProfileDetails?.email || "",
             username: jobSeekerProfileDetails?.username || "",
@@ -122,6 +126,8 @@ const JobSeekerDetails = ({ isEmployee, employerProfileDetails, jobSeekerProfile
     const employerProfileUpdate = async (e) => {
         e.preventDefault()
         const { email, companyname, phoneNumber, address, profilePic } = employerAcDetails;
+        console.log(email, companyname, phoneNumber, address, profilePic);
+        
         if (email && companyname && phoneNumber && address) {
             const reqBody = new FormData()
             reqBody.append("email", email)
@@ -132,11 +138,11 @@ const JobSeekerDetails = ({ isEmployee, employerProfileDetails, jobSeekerProfile
             const token = sessionStorage.getItem("token")
             if (token) {
                 const reqHeader = {
-                    "Content-Type": "multipart/form-data",
                     "Authorization": `Bearer ${token}`
                 }
                 try {
                     const result = await employerUpdateProfileApi(reqBody, reqHeader);
+                    
                     if (result.status === 200) {
                         alert("Profile updated successfully");
                         setEmployerDetails(result.data);
@@ -170,7 +176,7 @@ const JobSeekerDetails = ({ isEmployee, employerProfileDetails, jobSeekerProfile
                             <div className='mb-2'>
                                 <label className='d-flex justify-content-center'>
                                     <input onChange={e => setJobSeekerAcDetails({ ...jobSeekerAcDetails, profilePic: e.target.files[0] })} type="file" style={{ display: 'none' }} />
-                                    <img style={{ height: '100px' }} className='img-fluid' src={jobSeekerpreview ? jobSeekerpreview : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqafzhnwwYzuOTjTlaYMeQ7hxQLy_Wq8dnQg&s"} alt="No image" />
+                                    <img style={{ height: '100px' }} className='img-fluid' src={jobSeekerpreview ? jobSeekerpreview : `${serverUrl}/uploads/${jobSeekerProfileDetails?.profilePic}`} alt="No image" />
                                 </label>
                                 {
                                     !imageFileStatus && <div className='text-warning fw-bolder my-2 text-center'>Upload only the following file types ( jpeg , jpg , png )</div>
@@ -226,15 +232,16 @@ const JobSeekerDetails = ({ isEmployee, employerProfileDetails, jobSeekerProfile
                         </>
                     ) : (
                         <>
-                            {/* <div className='mb-2'>
+                            <div className='mb-2'>
                                 <label className='d-flex justify-content-center'>
                                     <input onChange={e => setEmployerAcDetails({ ...employerAcDetails, profilePic: e.target.files[0] })} type="file" style={{ display: 'none' }} />
-                                    <img style={{ height: '100px' }} className='img-fluid' src={employerpreview ? employerpreview : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqafzhnwwYzuOTjTlaYMeQ7hxQLy_Wq8dnQg&s"} alt="No image" />
+                                    <img style={{ height: '100px' }} className='img-fluid' src={employerpreview ? employerpreview : `${serverUrl}/uploads/${employerProfileDetails?.profilePic}`} alt="No image" />
+                                    
                                 </label>
                                 {
                                     !imageFileStatus && <div className='text-warning fw-bolder my-2 text-center'>Upload only the following file types ( jpeg , jpg , png )</div>
                                 }
-                            </div> */}
+                            </div>
                             <div className='mb-2'>
                                 <input value={employerAcDetails.companyname} onChange={e => setEmployerAcDetails({ ...employerAcDetails, companyname: e.target.value })} type="text" placeholder='Company Name' className='form-control' />
                             </div>

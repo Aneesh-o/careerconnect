@@ -18,7 +18,7 @@ const Chat = () => {
     const socket = io(serverUrl);
     // console.log(messages)
     useEffect(() => {
-    //     setSocket(socket);
+        //     setSocket(socket);
         return () => socket.disconnect();
     }, []);
 
@@ -99,7 +99,6 @@ const Chat = () => {
             const result = await sendMessage(newMessage);
             if (result.status === 201) {
                 setMessage('');
-                // setMessages(prev => [...prev, newMessage]);
                 getMessages()
                 socket.emit("send", newMessage);
             }
@@ -107,6 +106,9 @@ const Chat = () => {
             console.error("Error sending message:", error);
         }
     };
+
+    console.log(userDetails);
+
 
     return (
         <>
@@ -120,7 +122,7 @@ const Chat = () => {
                         {userDetails.filter(item => item._id !== id).map((item) => (
                             <ListGroup.Item key={item._id} action className={`border-0 py-3 ${selectedUser?._id === item._id ? "bg-light" : ""}`} onClick={() => setSelectedUser(item)}>
                                 <div className="d-flex align-items-center">
-                                    <Image src={item.profilePic ? `${serverUrl}/uploads/${item.profilePic}` : "default_profile.jpg"} roundedCircle width={50} height={50} className="me-3" />
+                                    <Image src={item.profilePic ? `${serverUrl}/uploads/${item.profilePic}` : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF5-3YjBcXTqKUlOAeUUtuOLKgQSma2wGG1g&s"} roundedCircle width={50} height={50} className="me-3" />
                                     <h6 className="mb-0">{item.username || item.companyname}</h6>
                                 </div>
                             </ListGroup.Item>
@@ -130,7 +132,7 @@ const Chat = () => {
                 <div className="flex-grow-1 d-flex flex-column">
                     {selectedUser ? (
                         <div className="d-flex align-items-center p-3 border-bottom bg-white">
-                            <h6 className="mb-0">{selectedUser.username}</h6>
+                            <h6 className="mb-0">{selectedUser.username ? selectedUser.username : selectedUser.companyname}</h6>
                         </div>
                     ) : (
                         <div className="d-flex align-items-center p-3 border-bottom bg-white">

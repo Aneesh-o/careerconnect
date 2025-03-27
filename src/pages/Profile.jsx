@@ -25,20 +25,17 @@ const Profile = () => {
 
 
     useEffect(() => {
-        if (!resume) return; // ✅ Prevents running on initial render
+        if (!resume) return;
 
         const allowedTypes = ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
 
         if (allowedTypes.includes(resume.type)) {
-            updateResume(); // ✅ Upload only when valid
+            updateResume();
         } else {
             setResume(null);
             alert("Invalid file type. Please upload a PDF or DOCX.");
         }
     }, [resume]);
-
-
-
 
 
     useEffect(() => {
@@ -89,8 +86,6 @@ const Profile = () => {
                 };
                 const result = await employerAcDetails(reqHeaders);
                 if (result?.status === 200) {
-                    console.log(result.data);
-
                     setEmployerProfileDetails(result.data);
                 } else if (result?.status === 401) {
                     alert(result.response?.data || "Unauthorized access");
@@ -111,11 +106,9 @@ const Profile = () => {
             }
             const reqBody = new FormData()
             reqBody.append("resume", resume)
-            console.log(reqBody);
 
             try {
                 const result = await updateSeekerResume(reqBody, reqHeaders)
-                console.log(result);
 
                 if (result.status == 200) {
                     alert("Resume Updated successfully");
@@ -129,7 +122,7 @@ const Profile = () => {
             alert("Authentication failed please login...")
         }
     }
-
+console.log(employerProfileDetails);
 
 
     return (
@@ -145,7 +138,7 @@ const Profile = () => {
                                 {/* Profile header */}
                                 <div className="d-flex p-3 align-items-center border-bottom">
                                     <div className="d-flex align-items-center mb-1">
-                                        {/* <img className='border me-2' style={{ width: '70px', borderRadius: '50%' }} src={`${serverUrl}/uploads/${employerProfileDetails?.profilePic}`} alt="" /> */}
+                                        <img className='border me-2' style={{ width: '70px', borderRadius: '50%' }} src={`${serverUrl}/uploads/${encodeURIComponent(employerProfileDetails?.profilePic)}`} alt="" />
                                         <h5 className="mb-0 mx-2">{employerProfileDetails.companyname ? employerProfileDetails.companyname : "Nill"}</h5>
                                     </div>
                                     <div className="ms-auto d-flex">
@@ -272,12 +265,8 @@ const Profile = () => {
                                             <hr />
                                             {/* Jobs Applied */}
                                             <div className="mb-3">
-                                                <div className="d-flex justify-content-between align-items-center mb-3">
-                                                    <h5 className="mb-0">Saved jobs</h5>
-                                                </div>
-                                                <Card className="border mb-3">
-                                                    {/* applied jobs */}
-                                                </Card>
+
+
                                             </div>
                                         </div>
                                     </Col>

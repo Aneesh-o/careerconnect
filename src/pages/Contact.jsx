@@ -184,7 +184,7 @@ const Contact = () => {
                                                             <td>{applicant.username || "Unknown"}</td>
                                                             <td>{applicant.email || "Unknown"}</td>
                                                             <td>{applicant.phoneNumber || "Unknown"}</td>
-                                                            <td>{applicant.education || "Not provided"}</td>
+                                                            <td>{applicant.qualification || "Not provided"}</td>
                                                             <td>{new Date(applicant.appliedAt).toLocaleDateString()}</td>
                                                             <td>
                                                                 <div className="d-flex gap-2">

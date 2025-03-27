@@ -6,11 +6,10 @@ import { Dropdown } from "react-bootstrap";
 import AddJob from './AddJob';
 import { jobCardEditContext } from '../Contexts/ContextApi';
 
-const JobCard = ({ insideProfile, item }) => {
+const JobCard = ({ insideProfile, item ,updatingButton}) => {
     const { jobCardUpdateDetails, setJobCardUpdateDetails } = useContext(jobCardEditContext)
 
     const [userJobDetail, setUserJobDetail] = useState([])
-    const [updatingButton, setUpdatingButton] = useState(false)
 
     useEffect(() => {
         getUserJobs()
@@ -49,7 +48,6 @@ const JobCard = ({ insideProfile, item }) => {
                     const result = await userApplyingJob(jobId, reqHeaders)
                     if (result.status == 200) {
                         alert("Applied success fully...you will get answer from company")
-                        setUpdatingButton(true)
                     } else if (result.status == 400) {
                         alert("Already applyed for this job...")
                     }
@@ -83,6 +81,8 @@ const JobCard = ({ insideProfile, item }) => {
             alert("Unauthorized...please login")
         }
     }
+
+    
 
     return (
         <>
