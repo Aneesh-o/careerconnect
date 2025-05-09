@@ -36,27 +36,27 @@ const Contact = () => {
         try {
             const result = await userAppliedDetails(reqHeaders); // API call
             if (result.status === 200) {
-                let hasNonRejectedApplicants = false; 
+                let hasNonRejectedApplicants = false;
                 const updatedJobs = result.data.jobs.map(job => {
-                    const totalApplicantsCount = job.applicants.length; 
+                    const totalApplicantsCount = job.applicants.length;
 
                     // Filter out rejected applicants
                     const filteredApplicants = job.applicants.filter(applicant => {
                         if (applicant.status !== "Rejected") {
-                            hasNonRejectedApplicants = true; 
-                            return true; 
+                            hasNonRejectedApplicants = true;
+                            return true;
                         }
                         return false; // Remove rejected applicants
                     });
 
                     return {
                         ...job,
-                        applicants: filteredApplicants, 
-                        totalApplicants: totalApplicantsCount, 
+                        applicants: filteredApplicants,
+                        totalApplicants: totalApplicantsCount,
                     };
                 });
 
-                setUserDetails({ jobs: updatedJobs }); 
+                setUserDetails({ jobs: updatedJobs });
 
             } else {
                 console.error("Unexpected response:", result);
@@ -156,7 +156,6 @@ const Contact = () => {
                     isEmployee ?
                         <div className="text-center w-75">
                             <h4 className="mb-4 text-warning">Candidate Applications</h4>
-
                             {userDetails.jobs && userDetails.jobs.length > 0 ? (
                                 userDetails.jobs.map((job) => (
                                     <div key={job._id} className="mb-5">
@@ -224,13 +223,13 @@ const Contact = () => {
                             {userAppliedJobs && userAppliedJobs.length > 0 ? (
                                 userAppliedJobs.map((job) => (
                                     <div key={job._id} className="mb-5">
-                                        <h5>{job.companyName} - {job.designation}</h5>
+                                        {/* <h5>{job.companyName} - {job.designation}</h5>
                                         <p>
                                             <strong>Location:</strong> {job.jobLocation} |
                                             <strong> Type:</strong> {job.jobType} |
                                             <strong> Skills Required:</strong> {job.skills}
                                         </p>
-                                        <p><strong>Salary Range:</strong> {job.salaryRange}</p>
+                                        <p><strong>Salary Range:</strong> {job.salaryRange}</p> */}
                                         {job.applicants && job.applicants.length > 0 ? (
                                             <Table striped bordered hover responsive variant="dark">
                                                 <thead>
@@ -251,7 +250,8 @@ const Contact = () => {
                                                 </tbody>
                                             </Table>
                                         ) : (
-                                            <p className="text-danger fw-bold">No applicants for this job.</p>
+                                            // <p className="text-danger fw-bold">No applicants for this job.</p>
+                                            <p></p>
                                         )}
                                     </div>
                                 ))
